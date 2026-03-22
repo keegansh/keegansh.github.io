@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Helwig Solutions — Documentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F9F9F9;
+      --ink: #0A0A0A;
+      --mid: #555;
+      --light: #AAA;
+      --border: #E2E2E2;
+      --white: #FFFFFF;
+      --code-bg: #0A0A0A;
+      --sidebar: 240px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 3rem; height: 60px;
+      background: rgba(249,249,249,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
+      color: var(--ink); text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 2.5rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem; font-weight: 400; letter-spacing: 0.06em;
+      color: var(--light); text-decoration: none; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active { color: var(--ink); }
+    .nav-cta {
+      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.5rem 1.2rem; border: 1px solid var(--ink);
+      color: var(--ink); text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--ink); color: var(--white); }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      padding-top: 60px;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar);
+      flex-shrink: 0;
+      position: sticky; top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 1.8rem;
+    }
+    .sidebar-group { margin-bottom: 2rem; }
+    .sidebar-group-title {
+      font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--light); margin-bottom: 0.6rem; display: block;
+    }
+    .sidebar-links { list-style: none; }
+    .sidebar-links li { margin-bottom: 0.1rem; }
+    .sidebar-links a {
+      display: block; padding: 0.32rem 0.7rem;
+      font-size: 0.8rem; color: var(--mid);
+      text-decoration: none; border-left: 2px solid transparent;
+      margin-left: -0.7rem; transition: color 0.15s, border-color 0.15s;
+    }
+    .sidebar-links a:hover { color: var(--ink); }
+    .sidebar-links a.active { color: var(--ink); border-color: var(--ink); }
+
+    /* ── CONTENT ── */
+    .content {
+      flex: 1;
+      padding: 4rem 4rem 8rem;
+      max-width: 740px;
+      animation: fadeIn 0.5s ease both;
+    }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--light); margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .breadcrumb a { color: var(--light); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--ink); }
+    .breadcrumb .sep { color: var(--border); }
+
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom: 3rem; }
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 0.8rem;
+    }
+    .page-header p { font-size: 0.9rem; color: var(--mid); line-height: 1.8; }
+    .header-rule { height: 1px; background: var(--border); margin: 2rem 0; }
+
+    /* ── SECTIONS ── */
+    .doc-section { margin-bottom: 3.5rem; scroll-margin-top: 80px; }
+    .doc-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .doc-section h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      margin: 2rem 0 0.8rem;
+    }
+    .doc-section p { font-size: 0.87rem; color: var(--mid); line-height: 1.9; margin-bottom: 0.9rem; }
+    .doc-section p strong { color: var(--ink); font-weight: 400; }
+    .doc-section a { color: var(--ink); text-underline-offset: 3px; }
+
+    /* ── CODE ── */
+    pre {
+      background: var(--code-bg); color: #D4D4D4;
+      padding: 1.4rem 1.6rem;
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+      font-size: 0.8rem; line-height: 1.75;
+      margin: 1.2rem 0; overflow-x: auto;
+    }
+    .pre-header {
+      background: #141414; color: var(--light);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.5rem 1.6rem; margin-top: 1.2rem;
+      border-bottom: 1px solid #222;
+    }
+    .pre-header + pre { margin-top: 0; }
+    code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem; background: var(--border);
+      padding: 0.15rem 0.4rem; color: var(--ink);
+    }
+    pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border: 1px solid var(--border); padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout-type {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); margin-bottom: 0.5rem;
+    }
+    .callout p { color: var(--mid); font-size: 0.83rem; margin: 0; }
+    .callout.warn { border-color: var(--ink); }
+    .callout.warn .callout-type { color: var(--ink); }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 1px solid var(--ink); }
+    th {
+      text-align: left; font-family: 'Syne', sans-serif;
+      font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); padding: 0.6rem 1rem 0.6rem 0; font-weight: 600;
+    }
+    td {
+      font-size: 0.8rem; color: var(--mid);
+      padding: 0.65rem 1rem 0.65rem 0; border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    td:first-child { color: var(--ink); }
+    td code { font-size: 0.75rem; }
+
+    /* ── STEP LIST ── */
+    .steps { list-style: none; margin: 1.2rem 0; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .steps li::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--light); padding-top: 0.12rem; white-space: nowrap;
+    }
+    .steps li p { font-size: 0.84rem; color: var(--mid); line-height: 1.8; margin: 0; }
+    .steps li p strong { color: var(--ink); font-weight: 400; }
+
+    /* ── RULE ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* ── ON-PAGE NAV ── */
+    .toc {
+      width: 180px; flex-shrink: 0;
+      position: sticky; top: 60px;
+      height: calc(100vh - 60px);
+      padding: 2.5rem 1.5rem;
+      overflow-y: auto;
+    }
+    .toc-title {
+      font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--light); margin-bottom: 0.8rem;
+    }
+    .toc ul { list-style: none; }
+    .toc li { margin-bottom: 0.35rem; }
+    .toc a {
+      font-size: 0.75rem; color: var(--light); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .toc a:hover { color: var(--ink); }
+
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    @media(max-width:1100px){ .toc{display:none} }
+    @media(max-width:760px){
+      .sidebar{display:none}
+      .content{padding:2.5rem 1.5rem 6rem}
+      nav{padding:0 1.5rem}
+      .nav-cta{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Helwig Solutions</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="docs.html" class="active">Docs</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <a href="/cdn-cgi/l/email-protection#4831273d082d30292538242d662b2725" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- Left sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-group">
+      <span class="sidebar-group-title">Getting Started</span>
+      <ul class="sidebar-links">
+        <li><a href="#overview" class="active">Overview</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#quickstart">Quick Start</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <span class="sidebar-group-title">Guides</span>
+      <ul class="sidebar-links">
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#examples">Examples</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-group">
+      <span class="sidebar-group-title">Reference</span>
+      <ul class="sidebar-links">
+        <li><a href="#api">API</a></li>
+        <li><a href="#errors">Error Codes</a></li>
+        <li><a href="#changelog">Changelog</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content">
+
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span>Documentation</span>
+      <span class="sep">/</span>
+      <span>Getting Started</span>
+    </div>
+
+    <header class="page-header" id="overview">
+      <h1>Documentation</h1>
+      <p>Replace this intro with a one-paragraph summary of what your project is, what it does, and who should read this documentation.</p>
+      <div class="header-rule"></div>
+    </header>
+
+    <!-- Overview -->
+    <section class="doc-section">
+      <h2>Overview</h2>
+      <p>Provide a clear, jargon-free explanation of the project. What problem does it solve? What is the high-level architecture? Who is this built for?</p>
+      <p>This documentation covers installation, configuration, usage patterns, a full API reference, and a changelog. Use the sidebar to navigate between sections.</p>
+      <div class="callout">
+        <div class="callout-type">Note</div>
+        <p>This is an informational callout. Use it to surface important context that readers shouldn't miss before proceeding.</p>
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Installation -->
+    <section class="doc-section" id="installation">
+      <h2>Installation</h2>
+      <p>Replace these instructions with the real steps needed to install and set up your project.</p>
+
+      <h3>Prerequisites</h3>
+      <ol class="steps">
+        <li><p><strong>Prerequisite one</strong> — describe what it is, the minimum version required, and where to get it.</p></li>
+        <li><p><strong>Prerequisite two</strong> — describe what it is, the minimum version required, and where to get it.</p></li>
+        <li><p><strong>Prerequisite three</strong> — describe what it is, the minimum version required, and where to get it.</p></li>
+      </ol>
+
+      <h3>Package manager</h3>
+      <div class="pre-header">npm</div>
+      <pre><code>npm install your-package-name</code></pre>
+      <div class="pre-header">yarn</div>
+      <pre><code>yarn add your-package-name</code></pre>
+
+      <h3>From source</h3>
+      <div class="pre-header">bash</div>
+      <pre><code>git clone https://github.com/your-username/your-repo.git
+cd your-repo
+npm install
+npm run build</code></pre>
+    </section>
+
+    <hr/>
+
+    <!-- Quick Start -->
+    <section class="doc-section" id="quickstart">
+      <h2>Quick Start</h2>
+      <p>The fastest path to a working integration. Replace with your actual quick-start steps.</p>
+
+      <div class="pre-header">typescript</div>
+      <pre><code>import { YourClient } from 'your-package-name';
+
+const client = new YourClient({
+  apiKey: process.env.YOUR_API_KEY,
+  baseUrl: 'https://api.example.com',
+});
+
+const result = await client.doSomething({ input: 'value' });
+console.log(result);</code></pre>
+
+      <div class="callout warn">
+        <div class="callout-type">Warning</div>
+        <p>Never commit API keys to source control. Use environment variables or a secrets manager.</p>
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Configuration -->
+    <section class="doc-section" id="configuration">
+      <h2>Configuration</h2>
+      <p>All available options when initialising the client. Replace with your real configuration surface.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>apiKey</code></td>
+              <td>string</td>
+              <td>—</td>
+              <td>Required. Your API key for authentication.</td>
+            </tr>
+            <tr>
+              <td><code>baseUrl</code></td>
+              <td>string</td>
+              <td><code>'https://api.example.com'</code></td>
+              <td>Base URL for all API requests.</td>
+            </tr>
+            <tr>
+              <td><code>timeout</code></td>
+              <td>number</td>
+              <td><code>5000</code></td>
+              <td>Request timeout in milliseconds.</td>
+            </tr>
+            <tr>
+              <td><code>retries</code></td>
+              <td>number</td>
+              <td><code>3</code></td>
+              <td>Number of automatic retry attempts on failure.</td>
+            </tr>
+            <tr>
+              <td><code>debug</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Enable verbose request/response logging.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Usage -->
+    <section class="doc-section" id="usage">
+      <h2>Usage</h2>
+      <p>Common patterns and idioms. Replace with real usage examples from your project.</p>
+
+      <h3>Pattern one</h3>
+      <p>Describe when to use this pattern and what it accomplishes.</p>
+      <div class="pre-header">typescript</div>
+      <pre><code>const result = await client.methodOne({
+  param: 'value',
+  flag: true,
+});</code></pre>
+
+      <h3>Pattern two — streaming</h3>
+      <p>Describe when to use this pattern and what it accomplishes.</p>
+      <div class="pre-header">typescript</div>
+      <pre><code>const stream = client.methodTwo.stream({ input: 'value' });
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk.data);
+}</code></pre>
+
+      <h3>Error handling</h3>
+      <p>All methods throw a <code>YourError</code> on failure. Wrap calls in a try/catch and inspect <code>error.code</code> to handle specific cases.</p>
+      <div class="pre-header">typescript</div>
+      <pre><code>import { YourError } from 'your-package-name';
+
+try {
+  const result = await client.doSomething({ input: 'value' });
+} catch (err) {
+  if (err instanceof YourError) {
+    console.error(err.code, err.message);
+  }
+}</code></pre>
+    </section>
+
+    <hr/>
+
+    <!-- Examples -->
+    <section class="doc-section" id="examples">
+      <h2>Examples</h2>
+      <p>Full worked examples. Replace with real examples from your project.</p>
+
+      <h3>Example 1 — basic flow</h3>
+      <p>Brief description of what this example shows and when you'd reach for it.</p>
+      <div class="pre-header">typescript</div>
+      <pre><code>import { YourClient } from 'your-package-name';
+
+async function main() {
+  const client = new YourClient({ apiKey: process.env.YOUR_API_KEY });
+  const items = await client.list({ limit: 10 });
+  items.forEach(item => console.log(item.id, item.name));
+}
+
+main().catch(console.error);</code></pre>
+
+      <h3>Example 2 — with configuration</h3>
+      <div class="pre-header">typescript</div>
+      <pre><code>const client = new YourClient({
+  apiKey: process.env.YOUR_API_KEY,
+  timeout: 10_000,
+  retries: 5,
+  debug: process.env.NODE_ENV !== 'production',
+});</code></pre>
+    </section>
+
+    <hr/>
+
+    <!-- API Reference -->
+    <section class="doc-section" id="api">
+      <h2>API Reference</h2>
+      <p>Complete reference for all client methods. Replace with your real API surface.</p>
+
+      <h3>client.methodOne(params)</h3>
+      <p>Describe what this method does, its side effects, and any rate limits or quotas that apply.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Param</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>param</code></td><td>string</td><td>Yes</td><td>The primary input value.</td></tr>
+            <tr><td><code>flag</code></td><td>boolean</td><td>No</td><td>Optional modifier flag. Defaults to <code>false</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Returns:</strong> <code>Promise&lt;Result&gt;</code></p>
+
+      <h3>client.methodTwo.stream(params)</h3>
+      <p>Describe what this method does and the shape of each streamed chunk.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Param</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>input</code></td><td>string</td><td>Yes</td><td>The input to stream against.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Returns:</strong> <code>AsyncIterable&lt;Chunk&gt;</code></p>
+    </section>
+
+    <hr/>
+
+    <!-- Error Codes -->
+    <section class="doc-section" id="errors">
+      <h2>Error Codes</h2>
+      <p>All errors thrown by the client include a <code>code</code> field. Reference the table below for handling logic.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Code</th><th>HTTP</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>AUTH_INVALID</code></td><td>401</td><td>The provided API key is missing or invalid.</td></tr>
+            <tr><td><code>RATE_LIMITED</code></td><td>429</td><td>Request rate limit exceeded. Retry after the <code>Retry-After</code> header value.</td></tr>
+            <tr><td><code>NOT_FOUND</code></td><td>404</td><td>The requested resource does not exist.</td></tr>
+            <tr><td><code>SERVER_ERROR</code></td><td>5xx</td><td>Internal server error. Safe to retry with exponential backoff.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Changelog -->
+    <section class="doc-section" id="changelog">
+      <h2>Changelog</h2>
+
+      <h3>v1.0.0</h3>
+      <ol class="steps">
+        <li><p><strong>Feature</strong> — Initial public release of the core client.</p></li>
+        <li><p><strong>Feature</strong> — Streaming support via <code>methodTwo.stream()</code>.</p></li>
+        <li><p><strong>Feature</strong> — Automatic retry with configurable backoff.</p></li>
+        <li><p><strong>Fix</strong> — Resolved edge case in timeout handling under load.</p></li>
+      </ol>
+    </section>
+
+  </main>
+
+  <!-- Right TOC -->
+  <aside class="toc">
+    <p class="toc-title">On this page</p>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#quickstart">Quick Start</a></li>
+      <li><a href="#configuration">Configuration</a></li>
+      <li><a href="#usage">Usage</a></li>
+      <li><a href="#examples">Examples</a></li>
+      <li><a href="#api">API Reference</a></li>
+      <li><a href="#errors">Error Codes</a></li>
+      <li><a href="#changelog">Changelog</a></li>
+    </ul

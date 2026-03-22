@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Helwig Solutions — Test Engineer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F9F9F9;
+      --ink: #0A0A0A;
+      --mid: #555;
+      --light: #AAA;
+      --border: #E2E2E2;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 3rem; height: 60px;
+      background: rgba(249,249,249,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: var(--ink); text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 2.5rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem; font-weight: 400; letter-spacing: 0.06em;
+      color: var(--light); text-decoration: none; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active { color: var(--ink); }
+    .nav-cta {
+      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.5rem 1.2rem; border: 1px solid var(--ink);
+      color: var(--ink); text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--ink); color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 160px 3rem 100px;
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 340px; gap: 6rem; align-items: end;
+      animation: fadeIn 0.7s ease both;
+    }
+    .hero-number {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--light); margin-bottom: 1.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .hero-number::before { content: ''; width: 32px; height: 1px; background: var(--light); display: inline-block; }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      font-weight: 800; line-height: 1.0; letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    .hero h1 .dim { color: var(--light); font-weight: 400; }
+    .hero-right { padding-bottom: 0.5rem; }
+    .hero-bio {
+      font-size: 0.88rem; line-height: 1.9; color: var(--mid);
+      margin-bottom: 2.5rem;
+    }
+    .hero-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-link {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-link:hover { color: var(--light); border-color: var(--light); }
+
+    /* ── STATS ROW ── */
+    .stats {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      max-width: 1080px; margin: 0 auto 80px; padding: 0 3rem;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat {
+      padding: 2rem 0;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; padding-left: 2rem; }
+    .stat:not(:first-child) { padding-left: 2rem; }
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: 0.2rem;
+    }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); }
+
+    /* ── SECTION HEADER ── */
+    .section-head {
+      max-width: 1080px; margin: 0 auto 2.5rem; padding: 0 3rem;
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .section-head h2 {
+      font-family: 'Syne', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--light);
+    }
+    .section-head a {
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; transition: color 0.2s;
+    }
+    .section-head a:hover { color: var(--ink); }
+
+    /* ── PROJECT LIST ── */
+    .project-list {
+      max-width: 1080px; margin: 0 auto 100px; padding: 0 3rem;
+    }
+    .project-item {
+      display: grid; grid-template-columns: 56px 1fr auto;
+      align-items: start; gap: 2rem;
+      padding: 2rem 0; border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      transition: background 0.15s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .project-item:nth-child(1){animation-delay:0.05s}
+    .project-item:nth-child(2){animation-delay:0.12s}
+    .project-item:nth-child(3){animation-delay:0.19s}
+    .project-item:nth-child(4){animation-delay:0.26s}
+    .project-item:nth-child(5){animation-delay:0.33s}
+    .project-item:first-child { border-top: 1px solid var(--border); }
+    .project-item:hover .project-title { text-decoration: underline; text-underline-offset: 3px; }
+    .project-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem; font-weight: 600; color: var(--light);
+      padding-top: 0.2rem;
+    }
+    .project-main {}
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 0.3rem;
+    }
+    .project-desc {
+      font-size: 0.83rem; color: var(--mid); line-height: 1.7; margin-bottom: 0.8rem;
+      max-width: 540px;
+    }
+    .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid var(--border); color: var(--light);
+      padding: 0.2rem 0.6rem;
+    }
+    .project-meta { text-align: right; padding-top: 0.2rem; }
+    .project-year { font-size: 0.72rem; color: var(--light); letter-spacing: 0.06em; }
+    .project-arrow {
+      display: block; margin-top: 0.8rem;
+      font-size: 1rem; color: var(--border);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .project-item:hover .project-arrow { color: var(--ink); transform: translate(3px,-3px); }
+
+    /* ── PLACEHOLDER ── */
+    .project-placeholder {
+      display: grid; grid-template-columns: 56px 1fr auto;
+      align-items: center; gap: 2rem;
+      padding: 1.6rem 0; border-bottom: 1px dashed var(--border);
+      opacity: 0.35;
+    }
+    .placeholder-bar {
+      height: 12px; background: var(--border); border-radius: 2px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      max-width: 1080px; margin: 0 auto 100px; padding: 0 3rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    }
+    .skill-group {}
+    .skill-group-title {
+      font-family: 'Syne', sans-serif; font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink);
+      margin-bottom: 0.8rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      font-size: 0.8rem; color: var(--mid);
+      padding: 0.3rem 0; border-bottom: 1px solid var(--bg);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      max-width: 1080px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 0.72rem; color: var(--light); letter-spacing: 0.06em; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+
+    /* ── EMC SECTION ── */
+    .emc-section {
+      max-width: 1080px; margin: 0 auto 100px; padding: 0 3rem;
+    }
+    .emc-intro {
+      max-width: 620px; margin-bottom: 3rem;
+    }
+    .emc-intro p { font-size: 0.87rem; color: var(--mid); line-height: 1.9; }
+    .emc-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .emc-card {
+      background: var(--bg); padding: 2rem;
+    }
+    .emc-card-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--light); border: 1px solid var(--border);
+      display: inline-block; padding: 0.2rem 0.55rem; margin-bottom: 1rem;
+    }
+    .emc-card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 0.6rem;
+    }
+    .emc-card-desc {
+      font-size: 0.82rem; color: var(--mid); line-height: 1.8; margin-bottom: 1rem;
+    }
+    .emc-list { list-style: none; }
+    .emc-list li {
+      font-size: 0.78rem; color: var(--mid); padding: 0.28rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .emc-list li:last-child { border-bottom: none; }
+    .emc-list li::before {
+      content: '–'; color: var(--light); flex-shrink: 0;
+    }
+    .emc-standards {
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .standards-label {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--light); white-space: nowrap;
+    }
+    .standards-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    @media(max-width:700px){
+      .emc-grid{ grid-template-columns: 1fr; }
+      .emc-section{ padding: 0 1.5rem; }
+    }
+
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;gap:3rem;padding:130px 2rem 70px}
+      .stats{grid-template-columns:repeat(2,1fr);padding:0 2rem}
+      .stat:nth-child(2){border-right:none}
+      .stat:nth-child(3){border-right:1px solid var(--border)}
+      .skills-grid{grid-template-columns:repeat(2,1fr);padding:0 2rem}
+      .section-head,.project-list{padding:0 2rem}
+      footer{padding:2rem}
+    }
+    @media(max-width:580px){
+      nav{padding:0 1.5rem}
+      .nav-cta{display:none}
+      .hero{padding:110px 1.5rem 60px}
+      .stats,.section-head,.project-list,.skills-grid{padding:0 1.5rem}
+      .stats{grid-template-columns:1fr 1fr}
+      .skills-grid{grid-template-columns:1fr 1fr}
+      .project-item{grid-template-columns:40px 1fr;gap:1rem}
+      .project-meta{display:none}
+      footer{flex-direction:column;gap:1rem;padding:1.5rem}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Helwig Solutions</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Work</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <a href="/cdn-cgi/l/email-protection#c3baacb683a6bba2aeb3afa6eda0acae" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <p class="hero-number">Electronics Test Engineer</p>
+    <h1>Testing<br/>hardware <span class="dim">before<br/>it ships.</span></h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-bio">
+      Replace this with a short, direct bio. Electronics test engineering specialist with expertise in automated test systems, EMC pre-compliance, and hardware validation. Skilled in LabVIEW, Python, and Linux-based test environments.
+    </p>
+    <div class="hero-links">
+      <a href="#" class="hero-link">GitHub</a>
+      <a href="#" class="hero-link">Resume ↗</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-value">—</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">—</div>
+    <div class="stat-label">DUTs Validated</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">—</div>
+    <div class="stat-label">Test Systems Built</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">—</div>
+    <div class="stat-label">EMC Tests Run</div>
+  </div>
+</div>
+
+<div class="section-head">
+  <h2>Selected Projects</h2>
+  <a href="#">View all →</a>
+</div>
+
+<div class="project-list" id="work">
+
+  <a href="#" class="project-item">
+    <span class="project-num">01</span>
+    <div class="project-main">
+      <h3 class="project-title">Automated Functional Test System</h3>
+      <p class="project-desc">Designed and built a LabVIEW-based automated test system for PCB functional validation, reducing test cycle time and eliminating manual measurement errors.</p>
+      <div class="project-tags">
+        <span class="tag">LabVIEW</span>
+        <span class="tag">VISA</span>
+        <span class="tag">NI-DAQ</span>
+        <span class="tag">GPIB</span>
+      </div>
+    </div>
+    <div class="project-meta">
+      <span class="project-year">2024</span>
+      <span class="project-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="#" class="project-item">
+    <span class="project-num">02</span>
+    <div class="project-main">
+      <h3 class="project-title">Python Instrument Control Framework</h3>
+      <p class="project-desc">Developed a Python library for SCPI-based instrument control over TCP/IP and USB, enabling scriptable control of oscilloscopes, power supplies, and signal generators.</p>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">SCPI</span>
+        <span class="tag">pyvisa</span>
+        <span class="tag">REST API</span>
+      </div>
+    </div>
+    <div class="project-meta">
+      <span class="project-year">2024</span>
+      <span class="project-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="#" class="project-item">
+    <span class="project-num">03</span>
+    <div class="project-main">
+      <h3 class="project-title">EMC Pre-Compliance Test Suite</h3>
+      <p class="project-desc">Built a pre-compliance radiated emissions test workflow using a near-field probe and spectrum analyser, enabling early-stage EMC risk identification before formal lab testing.</p>
+      <div class="project-tags">
+        <span class="tag">EMC</span>
+        <span class="tag">Python</span>
+        <span class="tag">Spectrum Analyser</span>
+        <span class="tag">Linux</span>
+      </div>
+    </div>
+    <div class="project-meta">
+      <span class="project-year">2024</span>
+      <span class="project-arrow">↗</span>
+    </div>
+  </a>
+
+  <a href="#" class="project-item">
+    <span class="project-num">04</span>
+    <div class="project-main">
+      <h3 class="project-title">Linux-Based Test Harness</h3>
+      <p class="project-desc">Deployed a headless Linux test harness on a Raspberry Pi to orchestrate nightly regression tests against embedded hardware via serial and REST API interfaces.</p>
+      <div class="project-tags">
+        <span class="tag">Linux</span>
+        <span class="tag">Python</span>
+        <span class="tag">REST API</span>
+        <span class="tag">Serial / UART</span>
+      </div>
+    </div>
+    <div class="project-meta">
+      <span class="project-year">2023</span>
+      <span class="project-arrow">↗</span>
+    </div>
+  </a>
+
+  <!-- Placeholder rows -->
+  <div class="project-placeholder">
+    <span class="project-num">05</span>
+    <div><div class="placeholder-bar" style="width:55%;margin-bottom:0.6rem"></div><div class="placeholder-bar" style="width:38%"></div></div>
+    <div style="font-size:0.7rem;color:var(--border)">Coming soon</div>
+  </div>
+
+</div>
+
+<div class="section-head">
+  <h2>Skills & Tools</h2>
+</div>
+
+<div class="skills-grid">
+  <div class="skill-group">
+    <div class="skill-group-title">Test Software</div>
+    <ul class="skill-list">
+      <li>LabVIEW</li>
+      <li>Python</li>
+      <li>pyvisa / SCPI</li>
+      <li>Bash / Shell</li>
+      <li>Git</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-title">Instruments</div>
+    <ul class="skill-list">
+      <li>Oscilloscopes</li>
+      <li>Spectrum Analysers</li>
+      <li>Power Supplies</li>
+      <li>Signal Generators</li>
+      <li>DMMs / LCR Meters</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-title">Interfaces</div>
+    <ul class="skill-list">
+      <li>GPIB / VISA</li>
+      <li>REST API</li>
+      <li>Serial / UART</li>
+      <li>USB / Ethernet</li>
+      <li>I²C / SPI</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <div class="skill-group-title">Platforms</div>
+    <ul class="skill-list">
+      <li>Linux</li>
+      <li>NI PXI / DAQ</li>
+      <li>Raspberry Pi</li>
+      <li>Docker</li>
+      <li>JIRA / Confluence</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-head">
+  <h2>EMC Pre-Compliance</h2>
+</div>
+
+<div class="emc-section">
+
+  <div class="emc-intro">
+    <p>Early-stage EMC pre-compliance testing identifies radiated and conducted emissions issues before formal lab submission — saving time, cost, and schedule risk. Replace this copy with your own approach and methodology.</p>
+  </div>
+
+  <div class="emc-grid">
+
+    <div class="emc-card">
+      <div class="emc-card-num">RE</div>
+      <h3 class="emc-card-title">Radiated Emissions</h3>
+      <p class="emc-card-desc">Near-field scanning and far-field correlation using a spectrum analyser and calibrated probes. Identifies dominant emission sources on PCB before anechoic chamber testing.</p>
+      <ul class="emc-list">
+        <li>Near-field H & E probe sweeps</li>
+        <li>Spectrum analyser peak hold scans</li>
+        <li>Limit line comparison (CISPR 32, FCC Part 15)</li>
+        <li>Source identification & mitigation</li>
+      </ul>
+    </div>
+
+    <div class="emc-card">
+      <div class="emc-card-num">CE</div>
+      <h3 class="emc-card-title">Conducted Emissions</h3>
+      <p class="emc-card-desc">Power line conducted emissions measurement using a LISN and spectrum analyser to assess compliance margins prior to accredited lab testing.</p>
+      <ul class="emc-list">
+        <li>LISN-based power port measurements</li>
+        <li>Common mode vs. differential mode analysis</li>
+        <li>CISPR 22 / EN 55032 limit evaluation</li>
+        <li>Filter design guidance</li>
+      </ul>
+    </div>
+
+    <div class="emc-card">
+      <div class="emc-card-num">ESD</div>
+      <h3 class="emc-card-title">ESD & Immunity Checks</h3>
+      <p class="emc-card-desc">Pre-compliance immunity spot-checks including ESD stress testing and fast transient evaluation to catch susceptibility before formal IEC 61000 testing.</p>
+      <ul class="emc-list">
+        <li>IEC 61000-4-2 ESD stress (air & contact)</li>
+        <li>Fast transient / burst (IEC 61000-4-4)</li>
+        <li>Functional performance criteria logging</li>
+        <li>Design hardening recommendations</li>
+      </ul>
+    </div>
+
+    <div class="emc-card">
+      <div class="emc-card-num">SW</div>
+      <h3 class="emc-card-title">Automated Test Workflows</h3>
+      <p class="emc-card-desc">Python-driven instrument control and data capture pipelines for repeatable, documented pre-compliance sweeps — with automatic report generation and limit line overlays.</p>
+      <ul class="emc-list">
+        <li>SCPI instrument control via pyvisa</li>
+        <li>Automated sweep & peak detection</li>
+        <li>CSV / PDF report generation</li>
+        <li>Linux-hosted CI test scheduling</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="emc-standards">
+    <span class="standards-label">Standards familiarity</span>
+    <div class="standards-tags">
+      <span class="tag">CISPR 32</span>
+      <span class="tag">CISPR 22</span>
+      <span class="tag">FCC Part 15</span>
+      <span class="tag">EN 55032</span>
+      <span class="tag">IEC 61000-4-2</span>
+      <span class="tag">IEC 61000-4-4</span>
+      <span class="tag">IEC 61000-4-5</span>
+      <span class="tag">MIL-STD-461</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Helwig Solutions</p>
+  <nav class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="docs.html">Docs</a
